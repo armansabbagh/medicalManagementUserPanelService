@@ -14,7 +14,7 @@ class AdminCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(
-            user_type=1,
+            user_type=0,
             is_superuser=True,
             is_staff=True,
             **validated_data
@@ -23,10 +23,10 @@ class AdminCreateSerializer(serializers.ModelSerializer):
         return user
 
 
-class NormalUserDetailCreateSerializer(serializers.ModelSerializer):
+class NormalUserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = NormalUser
-        fields = (
+        fields = [
             'birth_date',
             'national_code',
             'phone',
@@ -34,25 +34,26 @@ class NormalUserDetailCreateSerializer(serializers.ModelSerializer):
             'address',
             'disease',
             'disease_detail'
-        )
+        ]
 
 
 class NormalUserCreateSerializer(serializers.ModelSerializer):
-    normal_user = NormalUserDetailCreateSerializer()
+    normal_user_info = NormalUserDetailSerializer()
 
     class Meta:
         model = User
-        fields = (
+        fields = [
             'username',
+            'password',
             'first_name',
             'last_name',
-            'normal_user'
-        )
+            'normal_user_info'
+        ]
 
     def create(self, validated_data):
-        normal_user_data = validated_data.pop('normal_user')
+        normal_user_data = validated_data.pop('normal_user_info')
         user = User.objects.create_user(
-            user_type=3,
+            user_type=1,
             **validated_data
         )
 
@@ -76,21 +77,22 @@ class DoctorListSerializer(serializers.ModelSerializer):
 
 
 class DoctorCreateSerializer(serializers.ModelSerializer):
-    doctor = DoctorListSerializer()
+    doctor_info = DoctorListSerializer()
 
     class Meta:
         model = User
         fields = (
             'username',
+            'password',
             'first_name',
             'last_name',
-            'doctor'
+            'doctor_info'
         )
 
     def create(self, validated_data):
-        doctor_data = validated_data.pop('doctor')
+        doctor_data = validated_data.pop('doctor_info')
         user = User.objects.create_user(
-            user_type=3,
+            user_type=2,
             **validated_data
         )
 

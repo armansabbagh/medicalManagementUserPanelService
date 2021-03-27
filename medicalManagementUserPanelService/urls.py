@@ -18,5 +18,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/users/', include('users.api.urls', namespace='users-api')),
+    path('api/users/', include(('users.api.urls', 'users'), namespace='users-api')),
 ]
+
+admin.site.site_header = 'پنل مدیریت'
+admin.site.site_title = 'پنل کاربران'
+admin.site.index_title = 'پنل مدیریت کاربران عادی'
