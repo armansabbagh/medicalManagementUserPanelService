@@ -1,0 +1,15 @@
+*.pyc
+*~
+__pycache__
+venv
+db.sqlite3
+#/static
+.DS_Store
+.idea
+media
+/static/
+**/migrations/0*
+rmscript
+/media/product/
+celerybeat.pid
+celerybeat-schedu
