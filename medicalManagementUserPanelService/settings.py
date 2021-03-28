@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'users',
     'visits',
     'comments',
-    'location'
+    'location',
+    'favorite'
 ]
 
 AUTH_USER_MODEL = 'users.User'

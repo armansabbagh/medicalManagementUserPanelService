@@ -19,6 +19,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users/', include(('users.api.urls', 'users'), namespace='users-api')),
     path('api/visit/', include(('visits.api.urls', 'visits'), namespace='visits-api')),
+    # path('api/visits/', include(('visits.api.urls', 'visits'), namespace='visits-api')),
+    path('api/favorite/', include(('favorite.api.urls', 'favorite'), namespace='favorite-api')),
+    path('api/comments/', include(('comments.api.urls', 'comments'), namespace='comments-api')),
 ]
 
 admin.site.site_header = 'پنل مدیریت'
