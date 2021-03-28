@@ -1,6 +1,6 @@
 from django.db import models
+from location.models import City
 from django.contrib.auth.models import AbstractUser
-
 
 class User(AbstractUser):
     USER_TYPE_CHOICES = (
@@ -8,9 +8,11 @@ class User(AbstractUser):
         (1, 'normal_user'),
         (2, 'doctor'),
     )
-
-    username = models.CharField(primary_key=True, max_length=50, verbose_name='نام کاربری', null=False, blank=False)
-    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)
+    username = models.CharField(primary_key=True, max_length=50, null=False, blank=False)
+    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=0)
+    class Meta:
+        verbose_name = u'کاربر'
+        verbose_name_plural = u'تمامی کاربران'
 
     def __str__(self):
         return self.username
@@ -40,6 +42,7 @@ class Doctor(models.Model):
     content = models.TextField(max_length=500, verbose_name='توضیحات', blank=True, null=True)
     work_address = models.CharField(max_length=100, verbose_name=u'آدرس مطب')
     work_phone = models.CharField(max_length=15, verbose_name=u'شماره تلفن مطب')
+    city = models.ForeignKey(to=City, on_delete=models.CASCADE, null=True, verbose_name=u'شهر')
 
     class Meta:
         verbose_name = u'پزشک'

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from users.models import *
-
+from django.contrib import auth
 
 class AdminCreateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -71,6 +71,7 @@ class DoctorListSerializer(serializers.ModelSerializer):
         fields = (
             'specialist_type',
             'content',
+            'city',
             'work_address',
             'work_phone',
         )
@@ -102,3 +103,23 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
         )
 
         return user
+
+
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'user_type')
+
+    def validate(self, attrs):
+        username = attrs.get("username", "")
+        password = attrs.get("password", "")
+        # if username is None or password is None:
+        #     raise {
+        #         'error': 'Please provide both username and password',
+        #         'message': 'Please provide both username and password'
+        #     }
+        # if not user:
+        #     raise
+        #
+        # user = auth.authenticate(username=username, password=password)
+        # if user:

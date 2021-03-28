@@ -9,10 +9,11 @@ from rest_framework.status import (
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics
-
+from django.conf import settings
 from .serializers import *
 from users.models import Doctor, NormalUser
-
+from rest_framework_simplejwt.tokens import RefreshToken
+from medicalManagementUserPanelService.permisions import DoctorPermission
 
 class DoctorCreateAPIView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
@@ -41,7 +42,11 @@ class AdminCreateAPIView(generics.CreateAPIView):
 
 
 class LoginAPIView(APIView):
+    # permission_classes = (DoctorPermission,)
     permission_classes = (AllowAny,)
+    queryset = Doctor.objects.all()
+    serializer_class = LoginSerializer
+
 
     def post(self, request):
         username = request.data['username']
@@ -54,10 +59,12 @@ class LoginAPIView(APIView):
         user = authenticate(username=username, password=password)
         if not user:
             return Response({'error': 'Invalid Credentials'}, status=HTTP_404_NOT_FOUND)
-        users_types = {'admin': 0, 'normal_user': 1, 'doctor': 2}
-        if users_types.get(request.data['type']) and users_types.get(request.data['type']) == user.user_type:
-            token, _ = Token.objects.get_or_create(user=user)
-            return Response({'state': 'successful', 'token': token.key}, status=HTTP_200_OK)
+        users_types = {0: 'admin', 1: 'normal_user', 2: 'doctor'}
+        user_type = int(request.data['user_type'])
+        if user_type and user_type == user.user_type:
+            # token, _ = Token.objects.get_or_create(user=user)
+            token = RefreshToken.for_user(user)
+            return Response({'state': 'successful', 'token': str(token.access_token)}, status=HTTP_200_OK)
         else:
             return Response({
                 'error': 'invalid type',

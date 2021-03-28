@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users/', include(('users.api.urls', 'users'), namespace='users-api')),
+    path('api/visit/', include(('visits.api.urls', 'visits'), namespace='visits-api')),
 ]
 
 admin.site.site_header = 'پنل مدیریت'
