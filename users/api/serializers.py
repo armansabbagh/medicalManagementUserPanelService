@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from users.models import *
-from django.contrib import auth
+from rest_framework_simplejwt.tokens import RefreshToken
+
 
 class AdminCreateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,9 +25,14 @@ class AdminCreateSerializer(serializers.ModelSerializer):
 
 
 class NormalUserDetailSerializer(serializers.ModelSerializer):
+    first_name = serializers.SerializerMethodField()
+    last_name = serializers.SerializerMethodField()
+
     class Meta:
         model = NormalUser
         fields = [
+            'first_name',
+            'last_name',
             'birth_date',
             'national_code',
             'phone',
@@ -36,9 +42,16 @@ class NormalUserDetailSerializer(serializers.ModelSerializer):
             'disease_detail'
         ]
 
+    def get_first_name(self, instance):
+        return instance.user.first_name
+
+    def get_last_name(self, instance):
+        return instance.user.last_name
+
 
 class NormalUserCreateSerializer(serializers.ModelSerializer):
     normal_user_info = NormalUserDetailSerializer()
+    token = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -47,8 +60,16 @@ class NormalUserCreateSerializer(serializers.ModelSerializer):
             'password',
             'first_name',
             'last_name',
-            'normal_user_info'
+            'normal_user_info',
+            'token'
         ]
+        read_only_fields = ['token']
+        extra_kwargs = {
+            'password': {'write_only': True},
+        }
+
+    def get_token(self, instance):
+        return str(RefreshToken.for_user(instance))
 
     def create(self, validated_data):
         normal_user_data = validated_data.pop('normal_user_info')
@@ -66,6 +87,22 @@ class NormalUserCreateSerializer(serializers.ModelSerializer):
 
 
 class DoctorListSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+    city = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Doctor
+        fields = '__all__'
+        read_only_fields = ['name']
+
+    def get_name(self, instance):
+        return instance.user.first_name + ' ' + instance.user.last_name
+
+    def get_city(self, instance):
+        return instance.city.name
+
+
+class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         fields = (
@@ -74,11 +111,14 @@ class DoctorListSerializer(serializers.ModelSerializer):
             'city',
             'work_address',
             'work_phone',
+            'supervisor_number',
+            'degree'
         )
 
 
 class DoctorCreateSerializer(serializers.ModelSerializer):
-    doctor_info = DoctorListSerializer()
+    doctor_info = DoctorSerializer()
+    token = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -87,8 +127,16 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
             'password',
             'first_name',
             'last_name',
-            'doctor_info'
+            'doctor_info',
+            'token'
         )
+        read_only_fields = ['token']
+        extra_kwargs = {
+            'password': {'write_only': True},
+        }
+
+    def get_token(self, instance):
+        return str(RefreshToken.for_user(instance))
 
     def create(self, validated_data):
         doctor_data = validated_data.pop('doctor_info')
@@ -103,6 +151,11 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
         )
 
         return user
+
+    # def to_representation(self, obj):
+    #     ret = super(DoctorCreateSerializer, self).to_representation(obj)
+    #     ret.pop('password')
+    #     return ret
 
 
 class LoginSerializer(serializers.ModelSerializer):

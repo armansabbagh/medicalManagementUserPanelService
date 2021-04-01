@@ -1,0 +1,779 @@
+{
+	"info": {
+		"_postman_id": "127c6ba8-bcc1-4104-818d-f9c4f269e5bb",
+		"name": "medicalManagementUserPanelServiceProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "visit",
+			"item": [
+				{
+					"name": "add-visit-doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "date",
+									"value": "2021-03-25",
+									"type": "text"
+								},
+								{
+									"key": "time",
+									"value": "10:27",
+									"type": "text"
+								},
+								{
+									"key": "duration",
+									"value": "15",
+									"type": "text"
+								},
+								{
+									"key": "endTime",
+									"value": "13:15",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/api/visit/doctor/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"visit",
+								"doctor",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-visit-user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "visit_id",
+									"value": "21",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/api/visit/user/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"visit",
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my-visit-time",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/api/visit/user/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"visit",
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all-visit-time",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/visit/visitList/?search=mahdi",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"visit",
+								"visitList",
+								""
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "mahdi"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "authentication",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"USER_TOKEN\", pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "arman-NU1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "arman123",
+									"type": "text"
+								},
+								{
+									"key": "user_type",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/users/login/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"login",
+								""
+							]
+						},
+						"description": "login"
+					},
+					"response": []
+				},
+				{
+					"name": "register admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"USER_TOKEN\", pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "arman",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "arman123",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "arman",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "sabbagh",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/users/register-admin/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"register-admin",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register doctor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"USER_TOKEN\", pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"arman-D45\",\n  \"password\": \"arman123\",\n  \"first_name\": \"mahdi\",\n  \"last_name\": \"sabbagh\",\n  \"doctor_info\": {\n    \"specialist_type\": \"کشک\",\n    \"degree\": \"تخصص\",\n    \"content\": \"hello\",\n    \"city\": 1,\n    \"work_address\": \"a-b-c-d\",\n    \"work_phone\": \"0513458648\",\n    \"phone\": \"09158059139\",\n    \"supervisor_number\": \"111111111\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/users/register-doctor/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"register-doctor",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register normal user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"USER_TOKEN\", pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"arman-NU1\",\n    \"password\": \"arman123\",\n    \"first_name\": \"arman\",\n    \"last_name\": \"sabbagh\",\n    \"normal_user_info\": {\n        \"birth_date\": \"2000-07-18\",\n        \"national_code\": \"78451894856\",\n        \"phone\": \"09158059139\",\n        \"home_phone\": \"05134578512\",\n        \"address\": \"مشهد\",\n        \"disease\": \"خستگی\",\n        \"disease_detail\": \"خستگی حاد\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/users/register-normal-user/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"register-normal-user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list doctors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/users/doctors/?limit=5&page=2&city=1&specialist_type=فیزیوتراپی&degree=فوق تخصص&search=di arman",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"doctors",
+								""
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "city",
+									"value": "1"
+								},
+								{
+									"key": "specialist_type",
+									"value": "فیزیوتراپی"
+								},
+								{
+									"key": "degree",
+									"value": "فوق تخصص"
+								},
+								{
+									"key": "search",
+									"value": "di arman",
+									"description": "search in first_name, last_name, username"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get normal-user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/users/normal-user/me/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"normal-user",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update normal user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "phone",
+									"value": "091590163777",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "arman2",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "sdfsdf",
+									"type": "text"
+								},
+								{
+									"key": "disease",
+									"value": "خسسسسسسسسستگییییییی",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/api/users/normal-user/me/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"normal-user",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "favorite",
+			"item": [
+				{
+					"name": "get user favorite list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add to favorite list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "mahdi",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/api/favorite/user/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"favorite",
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "comment",
+			"item": [
+				{
+					"name": "get comments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/comments/?username=mahdi",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"comments",
+								""
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "mahdi"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "mahdi",
+									"type": "text"
+								},
+								{
+									"key": "comment",
+									"value": "ahahahhah",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/api/comments/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"comments",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "location",
+			"item": [
+				{
+					"name": "get all cities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/location/cities/?state=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"location",
+								"cities",
+								""
+							],
+							"query": [
+								{
+									"key": "state",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single city",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/location/cities/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"location",
+								"cities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all states",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/location/states/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"location",
+								"states",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single state",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/location/states/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"location",
+								"states",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "http://localhost:8000"
+		},
+		{
+			"key": "DOCTOR_TOKEN",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjE4MjYwNTIzLCJqdGkiOiJiYTE2ZjlkMTViMGY0YzI3YTE1MGIzMWQxZDc4MzcyMSIsInVzZXJfaWQiOiJtYWhkaSJ9.wMPg_4KPqDZSs-QelvsyLQUAh3-fnenqmKqMk3IKYRk"
+		},
+		{
+			"key": "USER_TOKEN",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjE4MjYwNTk3LCJqdGkiOiI2NmIxMjQ1NzMyMmU0NDAxYjU4YzMwNjhmODdlZjcxNyIsInVzZXJfaWQiOiJtb2hhbW1hZCJ9.ALys5f8IeBoB1_1BnZVIFzB0PR-0733B71DuUCBXXKg"
+		}
+	]
+}

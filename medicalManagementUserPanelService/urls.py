@@ -18,6 +18,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users/', include(('users.api.urls', 'users'), namespace='users-api')),
+    path('api/location/', include(('location.api.urls', 'location'), namespace='location-api')),
     path('api/visit/', include(('visits.api.urls', 'visits'), namespace='visits-api')),
     # path('api/visits/', include(('visits.api.urls', 'visits'), namespace='visits-api')),
     path('api/favorite/', include(('favorite.api.urls', 'favorite'), namespace='favorite-api')),

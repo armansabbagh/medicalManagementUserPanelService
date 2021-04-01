@@ -41,6 +41,8 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework.authtoken',
+    'django_filters',
+    'django_extensions',
 
     'users',
     'visits',
@@ -130,6 +132,10 @@ STATIC_URL = '/static/'
 
 users_types = 1
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        # 'rest_framework.filters.SearchFilter',
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
