@@ -10,7 +10,7 @@ class AdminTestCase(TestCase):
     def test_load_properly(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 404)
-        print('application load properly')
+        print('application load successfully')
 
     def test_user_admin(self):
         response = self.client.post('/api/users/register-admin/', {

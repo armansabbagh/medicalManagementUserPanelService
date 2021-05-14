@@ -1,9 +1,12 @@
 asgiref==3.3.1
 Django==2.2.19
+django-extensions==3.1.1
 django-filter==2.4.0
 djangorestframework==3.12.4
 djangorestframework-simplejwt==4.6.0
 Markdown==3.3.4
+pydotplus==2.0.2
 PyJWT==2.0.1
+pyparsing==2.4.7
 pytz==2021.1
 sqlparse==0.4.1

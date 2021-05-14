@@ -1,6 +1,12 @@
-echo "django makemigrations..."
+#!/bin/bash
+
+port=$1
+url="0.0.0.0"
+
+echo "*** makemigrations && migrate ***"
 python manage.py makemigrations
-echo "django migrate..."
 python manage.py migrate
-echo "run server..."
-python manage.py runserver 0.0.0.0:3000
+echo "*** run test ***"
+python manage.py test
+echo "*** run server ***"
+python manage.py runserver "$url":"$port"
